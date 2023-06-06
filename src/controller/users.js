@@ -17,6 +17,12 @@ const getAllUsers = async (req, res) => {
 
 const createNewUsers = async (req, res) => {
     const {body} = req;
+
+    if (!body.Nama || !body.email || !body.address){
+        return res.status(400).json({
+            message: "Data Tidak Lengkap, bad request",
+        })
+    }
     try {
         await modelTabel_users.createNewUsers(body);
         res.status(201).json({
