@@ -1,0 +1,25 @@
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/image');
+    },
+    filename: (req, file, cb) => {
+        const timestamp = new Date().getTime();
+        // console.log(file);
+        const fileName = file.originalname;
+
+        cb(null, `${timestamp}-${fileName}`);
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fieldSize: 5 * 1000 * 1000 //5 MB
+    }
+});
+
+module.exports = upload;
+
